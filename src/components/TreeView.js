@@ -33,6 +33,10 @@ class TreeView extends Component {
           </span>
         )
       } else {
+        // when one item can be any type of these types
+        if (Array.isArray(type)) {
+          type = type.join(', ')
+        }
         return (
           <span>
             <span className='param-type'>{type}</span>
