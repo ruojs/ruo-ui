@@ -47,11 +47,16 @@ function schemaToJson (schema) {
       break
     case 'object':
     default:
-      json = {}
-      if (schema.properties) {
-        _.forEach(schema.properties, (value, key) => {
-          json[key] = schemaToJson(value)
-        })
+      // when support more than one type just show the first one
+      if (Array.isArray(schema.type) && schema.type.length) {
+        json = schemaToJson({type: schema.type[0]});
+      } else {
+        json = {}
+        if (schema.properties) {
+          Object.keys(schema.properties).forEach((key) => {
+            json[key] = schemaToJson(schema.properties[key])
+          })
+        }
       }
       break
   }
